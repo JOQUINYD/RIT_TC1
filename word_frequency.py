@@ -21,8 +21,14 @@ def splitToAcceptedWords(fileText):
     return convert_accents(re.sub(pattern="[^\w\s]", repl=" " ,string=fileText).lower()).split()
 
 def word_count(fname):
+    try:
+        with open(fname, encoding='utf-8') as f:
+                #print(splitToAcceptedWords(f.read()))
+                return Counter(splitToAcceptedWords(f.read()))
+    except:
+        #if not utf-8 text file
         with open(fname) as f:
-                #print(sorted(splitToAcceptedWords(f.read())))
+                #print(splitToAcceptedWords(f.read()))
                 return Counter(splitToAcceptedWords(f.read()))
 
 def print_results(wordsDic):
