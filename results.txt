@@ -1,0 +1,48 @@
+- - - - - - - - - - - - - - - - - - - - - - -
+0		1
+1		4
+1997		1
+2		2
+4		1
+a		1
+actuales		1
+alpha		1
+arch		7
+arm		1
+arquitectura		1
+como		1
+cosas		1
+de		2
+del		1
+descripcion		1
+en		1
+equivalente		1
+i386		1
+i486		1
+i586		1
+imprime		1
+is		1
+julio		1
+la		2
+linux		3
+los		1
+m		1
+m68k		1
+manual		1
+maquina		1
+mips		1
+muestra		1
+nombre		1
+ppc		1
+programador		1
+sinopsis		1
+sistemas		1
+sparc		1
+tambien		1
+uname		3
+vease		1
+
+- - - - - - - - - - - - - - - - - - - - - - -
+
+Número de palabras distintas: 42
+Suma total de frecuencias: 58

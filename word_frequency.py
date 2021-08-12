@@ -2,6 +2,7 @@ from collections import Counter
 import string
 import re
 import unicodedata
+import os
 
 def getOnlyWords(originalWords):
     actualWords = []
@@ -9,7 +10,7 @@ def getOnlyWords(originalWords):
         print(word.translate(str.maketrans('', '', string.punctuation)))
     return actualWords
 
-def convert_accents(text):
+def convertAccents(text):
     accepted_accents = {u'\N{COMBINING TILDE}',}
     return ''.join(c for c in unicodedata.normalize('NFKD', text) 
                     if unicodedata.category(c) != 'Mn' or c in accepted_accents)
@@ -18,9 +19,9 @@ def splitToAcceptedWords(fileText):
     # sub -> quita los caracteres que no sean letras ni digitos
     # lower -> uppercase to lowercase
     # split -> separa cuando hay espacios
-    return convert_accents(re.sub(pattern="[^\w\s]", repl=" " ,string=fileText).lower()).split()
+    return convertAccents(re.sub(pattern="[^\w\s]", repl=" " ,string=fileText).lower()).split()
 
-def word_count(fname):
+def wordCount(fname):
     try:
         with open(fname, encoding='utf-8') as f:
                 #print(splitToAcceptedWords(f.read()))
@@ -31,7 +32,7 @@ def word_count(fname):
                 #print(splitToAcceptedWords(f.read()))
                 return Counter(splitToAcceptedWords(f.read()))
 
-def print_results(wordsDic):
+def printResults(wordsDic):
     sortedWords = sorted(wordsDic)
     totalFrequency = 0
 
@@ -46,11 +47,37 @@ def print_results(wordsDic):
     print("Suma total de frecuencias: ", totalFrequency)
     print('')
 
+def saveResults(wordsDic):
+    sortedWords = sorted(wordsDic)
+    totalFrequency = 0
+
+    textToSave = "- - - - - - - - - - - - - - - - - - - - - - -\n"
+    for word in sortedWords:
+        totalFrequency += wordsDic[word]
+        textToSave += word + '\t\t' + str(wordsDic[word]) + '\n'
+    textToSave += '\n'
+    textToSave += "- - - - - - - - - - - - - - - - - - - - - - -\n"
+    textToSave += '\n'
+    textToSave += "Número de palabras distintas: " + str(len(sortedWords)) + '\n'
+    textToSave += "Suma total de frecuencias: " + str(totalFrequency) + '\n'
+
+    with open("results.txt", "w", encoding='utf-8') as f:
+        f.write(textToSave)
+
 #print("Number of words in the file :", word_count("D:\joaqu\Documents\Joaquin Uni\TEC\Semestre 2021 - 2\RIT\mkdir.1"))
 
-print('')
-path = input("Ingresar dirección del archivo: ")
-print_results(word_count(path))
+def menu():
+    print('')
+    contProgram = input("Analizar frecuencias de archivos (Y/N): ")
+    while(contProgram != 'N'):
+        print('')
+        path = input("Ingresar dirección del archivo: ")
+        wordsDictionary = wordCount(path)
+        printResults(wordsDictionary)
+        saveResults(wordsDictionary)
+        print("Resultados en archivo results.txt")
+        print('')
+        contProgram = input("Analizar frecuencias de archivos (Y/N): ")
 
 
-
+menu()
