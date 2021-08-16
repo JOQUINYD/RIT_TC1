@@ -2,7 +2,6 @@ from collections import Counter
 import string
 import re
 import unicodedata
-import os
 
 def getOnlyWords(originalWords):
     actualWords = []
@@ -19,7 +18,7 @@ def splitToAcceptedWords(fileText):
     # sub -> quita los caracteres que no sean letras ni digitos
     # lower -> uppercase to lowercase
     # split -> separa cuando hay espacios
-    return convertAccents(re.sub(pattern="[^\w\s]", repl=" " ,string=fileText).lower()).split()
+    return convertAccents(re.sub(pattern="[\W_]", repl=" " ,string=fileText).lower()).split()
 
 def wordCount(fname):
     try:
